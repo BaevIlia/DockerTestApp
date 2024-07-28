@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  dockertestapp:
+    image: ${DOCKER_REGISTRY-}dockertestapp
+    build:
+      context: .
+      dockerfile: DockerTestApp/Dockerfile
+    ports:
+    - "5000:5000"
+    - "5001:5001"
+  database:
+    image: postgres:latest
+    container_name: test.db
+    environment:
+        - POSTGRES_DB=testdb
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=14863
+    volumes:
+    - ./.containers/products-db:/var/lib/postgresql/data
+    ports:
+    - 5432:5432
